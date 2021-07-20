@@ -46,6 +46,8 @@ namespace CleanArch.MVC
                 options.UseSqlServer(
                     Configuration.GetConnectionString("UniversityDBConnection")));
 
+            services.AddMvc(options => options.EnableEndpointRouting = false);
+
             RegisterServices(services);
         }
 
