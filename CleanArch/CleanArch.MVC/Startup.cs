@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CleanArch.Infra.Data.Context;
 using CleanArch.Infra.IOC;
+using MediatR;
 
 namespace CleanArch.MVC
 {
@@ -47,6 +48,8 @@ namespace CleanArch.MVC
                     Configuration.GetConnectionString("UniversityDBConnection")));
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
+
+            services.AddMediatR(typeof(Startup));
 
             RegisterServices(services);
         }
