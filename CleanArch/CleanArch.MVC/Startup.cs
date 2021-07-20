@@ -14,6 +14,7 @@ using CleanArch.MVC.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CleanArch.Infra.Data.Context;
+using CleanArch.Infra.IOC;
 
 namespace CleanArch.MVC
 {
@@ -36,8 +37,7 @@ namespace CleanArch.MVC
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
+            services.AddDbContext<ApplicationDbContext>(options =>                options.UseSqlServer(
                     Configuration.GetConnectionString("UniversityIdentityDBConnection")));
             services.AddDefaultIdentity<IdentityUser>()         
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -46,7 +46,7 @@ namespace CleanArch.MVC
                 options.UseSqlServer(
                     Configuration.GetConnectionString("UniversityDBConnection")));
 
-       
+            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,6 +76,13 @@ namespace CleanArch.MVC
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+          
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
+            DependencyContainer.RegisterServices(services);
         }
     }
 }
